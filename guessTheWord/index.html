@@ -22,11 +22,15 @@
       <div class="wrapper">
         <h1>Угадай слово</h1>
 
-        <button>Начать игру</button>
+        <button id="btnStart">Начать игру</button>
 
-        <div class="word-box"></div>
+        <p id="left">Осталось<span id="strTimer"></span></p>
+        <p id="strWord"></p>
 
-        <input type="text" class="word-enter">
+        <input type="text" id="textResult">
+
+        <p>Угадал:<span id="strWin"></span></p>
+        <p>Не угадал:<span id="strLose"></span></p>
 
       </div>
       <!-- /.wrapper -->
