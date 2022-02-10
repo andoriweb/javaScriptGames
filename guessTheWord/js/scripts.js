@@ -11,7 +11,7 @@ let btnStart = document.querySelector('#btnStart'),
     currentWord = '',
     textResult = document.querySelector('#textResult'),
     left = document.querySelector('#left'),
-    ttl = 15,
+    ttl = 3,
     strLose = document.querySelector('#strLose'),
     strWin = document.querySelector('#strWin'),
     numWin = 0,
@@ -24,21 +24,24 @@ Array.prototype.shuffle = function (){
 
 // Выводим новое слово
 function getNewWord() {
-  if (!wordList.length) {
+  if (wordList.length == 0) {
     left.innerHTML = 'Конец игры';
     strWord.innerHTML = '';
     textResult.value = '';
-    
     return;
   }
   secondsLeft = ttl;
   strTimer.innerHTML = secondsLeft;
-  currentWord = wordList.shuffle().shift();
+  wordList.shuffle();
+  currentWord = wordList.shift();
   strWord.innerHTML = currentWord.split('').shuffle().join('');
   textResult.focus();
   textResult.value = '';
   btnStart.disabled = 'disabled';
   timer = setInterval(getTime, 1000);
+
+  console.log(currentWord)
+  console.log(wordList)
 }
 
 // Остаток времени
