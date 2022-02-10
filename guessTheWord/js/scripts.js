@@ -8,24 +8,19 @@ let btnStart = document.querySelector('#btnStart'),
     secondsLeft = 0,
     strTimer = document.querySelector('#strTimer'),
     strWord = document.querySelector('#strWord'),
-    currentWord = shuffle(wordList),
+    currentWord = '',
     textResult = document.querySelector('#textResult'),
     left = document.querySelector('#left'),
-    ttl = 5,
+    ttl = 15,
     strLose = document.querySelector('#strLose'),
+    strWin = document.querySelector('#strWin'),
     numWin = 0,
     numLose = 0;
-  
-
 
 // Перемешивание массива слов
-// Тасование Фишера — Йетса
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
+Array.prototype.shuffle = function (){
+   return this.map(i=>[Math.random(), i]).sort().map(i=>i[1]);
+};
 
 // Выводим новое слово
 function getNewWord() {
@@ -38,17 +33,13 @@ function getNewWord() {
   }
   secondsLeft = ttl;
   strTimer.innerHTML = secondsLeft;
-  let wordListShuffle = wordList.shift().split('');
-  shuffle(wordListShuffle);
-  strWord.innerHTML = wordListShuffle.join('');
+  currentWord = wordList.shuffle().shift();
+  strWord.innerHTML = currentWord.split('').shuffle().join('');
   textResult.focus();
   textResult.value = '';
   btnStart.disabled = 'disabled';
   timer = setInterval(getTime, 1000);
 }
-
-// Провека вводимого слова
-function checkInput() {}
 
 // Остаток времени
 function getTime() {
@@ -57,6 +48,16 @@ function getTime() {
   if (secondsLeft == 0) {
     numLose++;
     strLose.innerHTML = numLose;
+    clearInterval(timer);
+    btnStart.disabled = '';
+  }
+}
+
+// Провека вводимого слова
+function checkInput() {
+  if (textResult.value == currentWord) {
+    numWin++;
+    strWin.innerHTML = numWin;
     clearInterval(timer);
     btnStart.disabled = '';
   }
